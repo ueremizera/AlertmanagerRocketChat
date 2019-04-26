@@ -15,31 +15,39 @@ class Script {
         for (i = 0; i < request.content.alerts.length; i++) {
             var endVal = request.content.alerts[i];
             var elem = {
-                title: "alertname: " + endVal.labels.alertname,
-                value: "*instance:* " + endVal.labels.instance,
-                short: false
+                title: "Alerta: " + endVal.labels.alertname,
+                value: "*Instância:* " + endVal.labels.instance,                
+                short: false                
             };
 
+          	var separador = {
+                title: "____________________________",
+                value: "",                
+                short: false                
+            };
+          
+            finFields.push(separador);
+          
             finFields.push(elem);
 
-            if (!!endVal.annotations.summary) {
+            if (!!endVal.annotations.message) {
                 finFields.push({
-                    title: "summary",
-                    value: endVal.annotations.summary
+                    title: "Mensagem",
+                    value: endVal.annotations.message
                 });
             }
 
-            if (!!endVal.annotations.severity) {
+            if (!!endVal.labels.severity) {
                 finFields.push({
-                    title: "severity",
-                    value: endVal.annotations.severity
+                    title: "Severidade",
+                    value: endVal.labels.severity
                 });
             }
 
-            if (!!endVal.annotations.description) {
+            if (!!endVal.labels.pod) {
                 finFields.push({
-                    title: "description",
-                    value: endVal.annotations.description
+                    title: "Pod",
+                    value: endVal.labels.pod
                 });
             }
         }
